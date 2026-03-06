@@ -3,55 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Mensiversary!</title>
+    <title>Happy Mensive!</title>
     <style>
-        body { background-color: #fff0f3; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
-        .card { background: white; padding: 2.5rem; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 75, 110, 0.2); text-align: center; width: 320px; position: relative; z-index: 10; border: 2px solid #ffb3c1; }
-        h1 { color: #c9184a; font-size: 24px; margin-bottom: 10px; }
-        p { color: #594d5b; font-size: 16px; margin-bottom: 10px; }
-        .gif { width: 160px; border-radius: 15px; margin-bottom: 15px; }
-        .btn-group { margin-top: 25px; display: flex; justify-content: space-around; height: 50px; position: relative; }
-        button { padding: 12px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 14px; }
-        #yesBtn { background-color: #ff4d6d; color: white; border: none; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
-        #noBtn { background-color: #f8f9fa; color: #ff4d6d; border: 1px solid #ff4d6d; position: absolute; right: 20px; }
+        body { background-color: #fff0f3; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow: hidden; }
+        .box { background: white; padding: 2rem; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; width: 320px; z-index: 10; border: 2px solid #ffb3c1; }
+        input { padding: 12px; border-radius: 10px; border: 2px solid #ffb3c1; width: 80%; margin-bottom: 15px; text-align: center; outline: none; font-size: 16px; }
+        button { padding: 12px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; background: #ff4d6d; color: white; transition: 0.3s; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
+        .hidden { display: none; }
+        .photo-gallery img { width: 100%; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 2px solid #ffeef1; }
+        #noBtn { position: absolute; background: #f8f9fa; color: #ff4d6d; border: 1px solid #ff4d6d; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.1s; z-index: 100; }
         .heart { position: fixed; top: -10px; font-size: 20px; color: #ff4d6d; user-select: none; z-index: 1; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
     </style>
 </head>
 <body>
-    <div class="card">
-        <img class="gif" src="https://media.giphy.com">
-        <h1>Happy Mensiversary, Love! ❤️</h1>
-        <p>I'm so grateful for every second with you. You still want to be mine for the next months, right?</p>
-        <div class="btn-group">
-            <button id="yesBtn" onclick="answer()">OF COURSE!</button>
-            <button id="noBtn" onmouseover="move()">No</button>
+
+    <!-- HALAMAN LOGIN -->
+    <div id="loginPage" class="box">
+        <h2>Enter Secret Code 🔒</h2>
+        <p>Our special date to unlock...</p>
+        <input type="text" id="passInput" placeholder="DDMMYY">
+        <br>
+        <button onclick="checkPass()">Unlock Love</button>
+    </div>
+
+    <!-- HALAMAN UTAMA -->
+    <div id="mainContent" class="box hidden">
+        <div class="photo-gallery">
+            <img src="https://i.postimg.cc" alt="Our Photo">
+        </div>
+        <h1>Happy Mensive, Love! ❤️</h1>
+        <p>Wanna stay with me forever?</p>
+        <div style="height: 50px; position: relative; margin-top: 25px; display: flex; justify-content: center; align-items: center;">
+            <button onclick="success()" style="margin-right: 20px;">YES!</button>
+            <button id="noBtn" onmouseover="moveNo()">No</button>
         </div>
     </div>
+
     <script>
-        function move() {
+        // PASSWORD SUDAH DIGANTI JADI 070225
+        const secretCode = "070225"; 
+
+        function checkPass() {
+            const input = document.getElementById('passInput').value;
+            if(input === secretCode) {
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
+                startHearts();
+            } else {
+                alert("Wrong code! Think harder, honey ❌");
+            }
+        }
+
+        function moveNo() {
             const x = Math.random() * (window.innerWidth - 100);
             const y = Math.random() * (window.innerHeight - 50);
             const btn = document.getElementById('noBtn');
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
-        function answer() {
-            alert('Yay! Best decision ever! I love you so much ❤️');
-            window.location.href = "https://t.me"; 
+
+        function success() {
+            alert("Yay! I love you more than anything ❤️");
+            window.location.href = "https://t.me";
         }
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            heart.style.opacity = Math.random();
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 5000);
+
+        function startHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
         }
-        setInterval(createHeart, 300);
     </script>
 </body>
-              </html>
-              
+</html>
