@@ -4,15 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Mensive!</title>
+    <!-- Link Font mirip contoh -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
-        body { background-color: #fff0f3; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow: hidden; }
-        .box { background: white; padding: 2rem; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; width: 320px; z-index: 10; border: 2px solid #ffb3c1; }
-        input { padding: 12px; border-radius: 10px; border: 2px solid #ffb3c1; width: 80%; margin-bottom: 15px; text-align: center; outline: none; font-size: 16px; }
-        button { padding: 12px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; background: #ff4d6d; color: white; transition: 0.3s; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
+        :root {
+            --pink-bg: #fce4ec;
+            --pink-card: #ffffff;
+            --pink-accent: #ff4d6d;
+            --pink-hover: #ff758f;
+        }
+
+        body { 
+            background-color: var(--pink-bg); 
+            font-family: 'Quicksand', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            overflow: hidden; 
+        }
+
+        .box { 
+            background: var(--pink-card); 
+            padding: 30px; 
+            border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); 
+            text-align: center; 
+            width: 320px; 
+            z-index: 10; 
+            border: 4px solid #fff;
+        }
+
+        h1, h2 { 
+            color: var(--pink-accent); 
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        p { color: #666; font-size: 15px; margin-bottom: 20px; }
+
+        input { 
+            padding: 12px; 
+            border-radius: 15px; 
+            border: 2px solid #ffccd5; 
+            width: 85%; 
+            margin-bottom: 15px; 
+            text-align: center; 
+            outline: none; 
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--pink-accent); }
+
+        button { 
+            padding: 12px 28px; 
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            background: var(--pink-accent); 
+            color: white; 
+            transition: 0.3s; 
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover { background: var(--pink-hover); transform: translateY(-2px); }
+
         .hidden { display: none; }
-        .photo-gallery img { width: 100%; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 2px solid #ffeef1; }
-        #noBtn { position: absolute; background: #f8f9fa; color: #ff4d6d; border: 1px solid #ff4d6d; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.1s; z-index: 100; }
-        .heart { position: fixed; top: -10px; font-size: 20px; color: #ff4d6d; user-select: none; z-index: 1; animation: fall linear forwards; }
+
+        .photo-gallery img { 
+            width: 100%; 
+            height: 250px;
+            object-fit: cover;
+            border-radius: 20px; 
+            margin-bottom: 15px; 
+            border: 5px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            height: 50px;
+            position: relative;
+        }
+
+        #noBtn { 
+            background: #fff; 
+            color: var(--pink-accent); 
+            border: 2px solid var(--pink-accent); 
+            position: absolute;
+        }
+
+        .heart { 
+            position: fixed; 
+            top: -10px; 
+            font-size: 20px; 
+            color: var(--pink-accent); 
+            user-select: none; 
+            z-index: 1; 
+            animation: fall linear forwards; 
+        }
+
         @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
     </style>
 </head>
@@ -20,8 +122,8 @@
 
     <!-- HALAMAN LOGIN -->
     <div id="loginPage" class="box">
-        <h2>Enter Secret Code 🔒</h2>
-        <p>Our special date to unlock...</p>
+        <h2>Secret Access 🔒</h2>
+        <p>Enter our special date to unlock your surprise!</p>
         <input type="text" id="passInput" placeholder="DDMMYY">
         <br>
         <button onclick="checkPass()">Unlock Love</button>
@@ -33,15 +135,14 @@
             <img src="https://i.postimg.cc" alt="Our Photo">
         </div>
         <h1>Happy Mensive, Love! ❤️</h1>
-        <p>Wanna stay with me forever?</p>
-        <div style="height: 50px; position: relative; margin-top: 25px; display: flex; justify-content: center; align-items: center;">
-            <button onclick="success()" style="margin-right: 20px;">YES!</button>
+        <p>Will you stay by my side forever?</p>
+        <div class="btn-container">
+            <button onclick="success()" id="yesBtn">YES!</button>
             <button id="noBtn" onmouseover="moveNo()">No</button>
         </div>
     </div>
 
     <script>
-        // PASSWORD SUDAH DIGANTI JADI 070225
         const secretCode = "070225"; 
 
         function checkPass() {
@@ -56,15 +157,15 @@
         }
 
         function moveNo() {
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
             const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
         function success() {
-            alert("Yay! I love you more than anything ❤️");
+            alert("Yay! You made me the happiest person! I love you! ❤️");
             window.location.href = "https://t.me";
         }
 
@@ -81,4 +182,5 @@
         }
     </script>
 </body>
-</html>
+                </html>
+    
